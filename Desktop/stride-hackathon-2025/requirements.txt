@@ -8,3 +8,4 @@ langchain-google-genai
 langchain-experimental
 tavily-python
 tabulate
+langchain-agents
