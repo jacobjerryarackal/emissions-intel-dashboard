@@ -2,7 +2,7 @@ import os
 import streamlit as st
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_experimental.agents import create_pandas_dataframe_agent
-from langchain.agents.agent_types import AgentType
+from langchain.agents import AgentType
 from langchain_community.tools.tavily_search import TavilySearchResults
 
 def get_agent(df):
