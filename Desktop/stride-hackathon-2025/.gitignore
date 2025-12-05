@@ -1,0 +1,19 @@
+# Ignore the entire parent directory contents that are showing up
+# The double asterisk (**) means match directories in any subdirectory
+**/.anaconda/
+**/.bash_history
+**/AppData/
+**/Contacts/
+**/Documents/
+**/Downloads/
+**/IdeaProjects/
+**/Music/
+**/OneDrive/
+**/Pictures/
+**/Videos/
+# Ignore common Python/Node/Deployment artifacts
+__pycache__/
+.env
+.DS_Store
+*.pyc
+node_modules/
