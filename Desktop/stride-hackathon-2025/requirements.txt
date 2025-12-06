@@ -2,9 +2,9 @@ streamlit
 pandas
 plotly
 python-dotenv
-langchain
-langchain-community
+langchain==0.3.27
+langchain-community==0.3.27
 langchain-google-genai
-langchain-experimental
+langchain-experimental==0.3.27
 tavily-python
 tabulate
