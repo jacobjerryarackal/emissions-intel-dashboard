@@ -24,6 +24,7 @@ def get_agent(df):
         model_name="llama-3.1-8b-instant",  # good balance of speed & quality
         temperature=0,
         max_retries=1,
+        max_tokens=512,
     )
 
     # 3. Create Pandas DataFrame Agent
