@@ -19,7 +19,7 @@ def main():
     # ---------------------------
     # 1. LOAD DATA
     # ---------------------------
-    df = load_dataset(file_path="emissions.csv")
+    df = load_dataset("emissions.csv")
     
     if df is None:
         st.error("Data not found! Please check 'data/emissions.csv'.")
