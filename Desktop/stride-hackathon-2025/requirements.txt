@@ -8,3 +8,5 @@ langchain-google-genai
 langchain-experimental
 tavily-python
 tabulate
+groq
+langchain-groq

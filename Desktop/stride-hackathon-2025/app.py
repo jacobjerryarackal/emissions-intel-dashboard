@@ -93,7 +93,8 @@ def main():
     agent = get_agent(df) # Pass the FULL df to the agent, not just filtered
     
     if agent is None:
-        st.error("⚠️ API Keys missing! Please set OPENAI_API_KEY and TAVILY_API_KEY.")
+        st.error("⚠️ Agent could not be initialized. Check that GROQ_API_KEY is set.")
+
 
     # User Input
     if prompt := st.chat_input("E.g. 'Compare US and India emissions in 2023 and find reasons why.'"):

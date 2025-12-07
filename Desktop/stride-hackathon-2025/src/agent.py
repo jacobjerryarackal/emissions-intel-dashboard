@@ -1,46 +1,38 @@
 import os
 import streamlit as st
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langchain_experimental.agents import create_pandas_dataframe_agent
-from langchain.agents.agent_types import AgentType
-from langchain_community.tools.tavily_search import TavilySearchResults
+
 
 def get_agent(df):
     """
-    Creates an agent that has access to:
-    1. The Pandas DataFrame (to answer data questions)
-    2. The Tavily Search Tool (to answer internet questions)
-    """
-    
-    # 1. Fetch Keys
-    # We check Streamlit secrets first (for cloud), then environment variables (for local)
-    gemini_key = os.getenv("GOOGLE_API_KEY") or st.secrets.get("GOOGLE_API_KEY")
-    tavily_key = os.getenv("TAVILY_API_KEY") or st.secrets.get("TAVILY_API_KEY")
+    Creates an agent that can analyze the provided Pandas DataFrame.
 
-    if not gemini_key or not tavily_key:
+    Uses Groq's Llama 3.1 models (fast + generous free tier)
+    and does NOT use internet search tools, only your emissions dataset.
+    """
+
+    # 1. Fetch Groq API key
+    groq_key = os.getenv("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY")
+    if not groq_key:
+        st.error("⚠️ GROQ_API_KEY is missing. Please set it in Streamlit secrets or your .env file.")
         return None
 
-    # 2. Setup LLM
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash", # Use a model optimized for function calling
-        temperature=0, 
-        google_api_key=gemini_key, # Pass the key explicitly
-        convert_system_message_to_human=True # Required for best performance with some agent types
+    # 2. Setup LLM from Groq
+    llm = ChatGroq(
+        groq_api_key=groq_key,
+        model_name="llama-3.1-8b-instant",  # good balance of speed & quality
+        temperature=0,
+        max_retries=1,
     )
 
-    # 3. Setup Internet Search
-    search_tool = TavilySearchResults(tavily_api_key=tavily_key, k=1)
-
-    # 4. Create the Agent
-    # extra_tools allows the pandas agent to look outside the CSV
+    # 3. Create Pandas DataFrame Agent
     agent = create_pandas_dataframe_agent(
         llm,
         df,
-        agent_type=AgentType.OPENAI_FUNCTIONS,
-        extra_tools=[search_tool], 
-        verbose=True,
-        allow_dangerous_code=True,
-        handle_parsing_errors=True
+        verbose=False,
+        allow_dangerous_code=True,          # required for pandas execution
+        handle_parsing_errors=True,
     )
 
     return agent
