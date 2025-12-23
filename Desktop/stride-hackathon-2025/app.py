@@ -10,11 +10,12 @@ from src.agent import get_agent
 load_dotenv()
 
 # Page Config
-st.set_page_config(page_title="Stride Emissions Intel", layout="wide")
+st.set_page_config(page_title="Emissions Intel Dashboard", layout="wide")
 
 def main():
-    st.title("🌍 Stride Labs: Emissions Intel Dashboard")
-    st.markdown("### HackForward 2025 Round 2 Submission")
+    st.title("🌍 Emissions Intelligence Dashboard")
+    st.markdown("### Sector-wise CO₂ Analysis with AI-Powered Insights")
+
 
     # ---------------------------
     # 1. LOAD DATA
